@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB">
+<head>
+	<title>Граф Знаний</title>
+        <meta charset="utf-8">
+        <title>Graph editing tools</title>
+        <link type="text/css" href="index.css" rel="stylesheet"/>
+        <script src='jquery.min.js' type='text/javascript'></script>
+        <script src="FileSaver.min.js"></script>
+        <script src="d3.v3.min.js"></script>
+        <script src="queue.v1.min.js"></script>
+		<script src="highlight.pack.js"></script>
+		<link rel="stylesheet" href="styles/default.css">
+		<script src="index.js"></script>
+
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+	<meta name="description" content="The Perfect 2 Column Liquid Layout (right menu): No CSS hacks. SEO friendly. iPhone compatible." />
+	<meta name="keywords" content="The Perfect 2 Column Liquid Layout (right menu): No CSS hacks. SEO friendly. iPhone compatible." />
+	<meta name="robots" content="index, follow" />
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="screen.css" media="screen" />
+</head>
+<body>
+
+	
+<div id="header">
+	<!-- <p><a href="http://matthewjamestaylor.com/blog/perfect-multi-column-liquid-layouts" title="Perfect multi-column liquid layouts - iPhone compatible">&laquo; Back to the CSS article</a> by <a href="http://matthewjamestaylor.com">Matthew James Taylor</a></p> -->
+	<!-- <h1>Граф знаний (Knowledge Graph)</h1> -->
+	<!-- <h2>Интерфейс редактирования</h2> -->
+
+	<!-- <ul>
+		<li><a href="http://matthewjamestaylor.com/blog/perfect-3-column.htm">3 Column <span>Holy Grail</span></a></li>
+		<li><a href="http://matthewjamestaylor.com/blog/perfect-3-column-blog-style.htm">3 Column <span>Blog Style</span></a></li>
+		<li><a href="http://matthewjamestaylor.com/blog/perfect-2-column-left-menu.htm">2 Column <span>Left Menu</span></a></li>
+		<li><a href="http://matthewjamestaylor.com/blog/perfect-2-column-right-menu.htm" class="active">2 Column <span>Right Menu</span></a></li>
+
+		<li><a href="http://matthewjamestaylor.com/blog/perfect-2-column-double-page.htm">2 Column <span>Double Page</span></a></li>
+		<li><a href="http://matthewjamestaylor.com/blog/perfect-full-page.htm">1 Column <span>Full Page</span></a></li>
+		<li><a href="http://matthewjamestaylor.com/blog/perfect-stacked-columns.htm">Stacked <span>columns</span></a></li>
+	</ul> -->
+	<!-- <p id="layoutdims">Measure columns in: <a href="http://matthewjamestaylor.com/blog/ultimate-2-column-right-menu-pixels.htm">Pixel widths</a> | <a href="http://matthewjamestaylor.com/blog/ultimate-2-column-right-menu-ems.htm">Em widths</a> | <strong>Percentage widths</strong></p> -->
+
+</div>
+<div class="colmask rightmenu" >
+	<div class="colleft" >
+		<div class="col1">
+			<!-- Column 1 start -->
+			<!-- <h2>Percentage dimensions of the right menu layout</h2> -->
+			
+				<div id="all"></div>
+				<div> 
+					<button id="but">Toggle Links!</button>
+					<button id="ButtonToggleLinkLabels">Toggle LinkLabels</button> 
+					<button id="ButtonToggleLinkLabelsSection">Toggle LinkLabels Section</button> 
+					<button id="ButtonToggleLinkLabelsOrder">Toggle LinkLabels Order</button> 
+				</div>
+			<!-- Column 1 end -->
+		</div>
+		<div class="col2" >
+		<!-- style="visibility:hidden;display:none;" -->
+			<!-- Column 2 start -->
+			
+			<!-- <h2>No CSS hacks</h2> -->
+			<div style="margin-top:10px;"></div>
+			<div class="block">
+				<label>Краткое название</label>
+				<input id="editr" type="text"/>
+			</div>
+			<div class="block">
+				<label>URL</label>
+				<input id="url" type="text"/>
+			</div>
+			<!-- <div class="block">
+				<label>Уровень</label>
+				<input id="svdhada" type="text" />
+			</div>				 -->
+			
+			<!-- <div class="divlvl" id="divlvl1" style="width:50px;height:50px;border-width: 1px;">1</div>
+			<div class="divlvl" id="divlvl2" style="border-width: 20px;">2</div>
+			<div class="divlvl" id="divlvl3" style="border-width: 15px;">3</div>
+			<div class="divlvl" id="divlvl4" style="border-width: 10px;">4</div>
+			<div class="divlvl" id="divlvl5" style="border-width: 6px;">5</div> -->
+			
+			<a class="divlvl inline" id="divlvl1" style="height:70px;width:70px;" href="#">1</a>
+			<a class="divlvl inline" id="divlvl2" style="height:50px;width:50px;" href="#">2</a>
+			<a class="divlvl inline" id="divlvl3" style="height:40px;width:40px;" href="#">3</a>
+			<a class="divlvl inline" id="divlvl4" style="height:30px;width:30px;" href="#">4</a>
+			<a class="divlvl inline" id="divlvl5" style="height:20px;width:20px;" href="#">5</a>
+			
+			<div class="clearBoth" /><!-- you may or may not need this -->
+			
+			<div id="colorspace"></div>
+				<a class="inline typology" id="oolll" href="#">concept</a>
+				<a class="inline typology" id="oolll" href="#">feature</a>
+				<a class="inline typology" id="oolll" href="#">category</a>
+				<a class="inline typology" id="oolll" href="#">fact</a>
+			
+			
+			
+			
+			<div style="clear:left;"/></div>
+			<div style="margin-top:50px;"/></div>
+			
+			
+			<button id="btn_add_node">Add Node</button> 
+			<hr/>
+			<button id="btn_del_node">Delete Selected Node / Link</button> 
+			<hr/>
+			<button id="btn_create_graph">Create graph</button> 
+			
+			
+			<div></div>
+			<!-- <fieldset>
+			 
+			</fieldset> -->
+			<!-- <div> <button id="but2">Add Link Mode</button> </div> -->
+			<fieldset>
+			<p>Current graph <span id="gnum"></span></p> 
+				<div><input id="cgraph_name" type="text"/></div>
+				<div style="margin-top:3px;"><button id="btn_save">Download graph as json</button></div>
+			</fieldset>
+			<p>Other graphs</p>
+			<div id="graphslistdiv">
+				<ul id="graphslist">
+				</ul>
+			</div>
+			
+<!-- <form>
+  <fieldset>
+    <legend>Fruit juice size</legend>
+    <p>
+      <input type="radio" name="size" id="size_1" value="small" />
+      <label for="size_1">Small</label>
+    </p>
+    <p>
+      <input type="radio" name="size" id="size_2" value="medium" />
+      <label for="size_2">Medium</label>
+    </p>
+    <p>
+      <input type="radio" name="size" id="size_3" value="large" />
+      <label for="size_3">Large</label>
+    </p>
+  </fieldset>
+</form> -->
+				
+
+
+			<!-- Column 2 end -->
+		</div>
+	</div>
+</div>
+<div id="footer">
+<!--  <p> This page was built with small amount of <a href="http://alyaxey.yaskevich.com/">protons</a>.</p>
+	<img src="so-much-win2.png" /> -->
+
+ <pre><code id="pretty" class="json"></code></pre>
+ 
+
+
+	
+ </div>
+
+</body>
+</html>

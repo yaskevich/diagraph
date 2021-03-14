@@ -1,0 +1,99 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+</style>
+</head>
+<body>
+<button onClick="saveAsImage('#forSvg', 'SampleImage.png')">Save</button>
+<div id="forSvg"></div>
+
+<script src="http://d3js.org/d3.v3.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script>
+<script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/StackBlur.js"></script>
+<script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/canvg.js"></script>
+<script type="text/javascript" src="./js/canvas-toBlob.js"></script>
+<script type="text/javascript" src="./js/FileSaver.js"></script>
+
+<script>
+var dataset = [
+    {graphLegend:"001", graphValue:10, graphColor:"LightPink"},
+    {graphLegend:"002", graphValue:20, graphColor:"LightCyan"},
+    {graphLegend:"003", graphValue:30, graphColor:"LightGoldenrodYellow"},
+    {graphLegend:"004", graphValue:25, graphColor:"Aquamarine"},
+    {graphLegend:"005", graphValue:10, graphColor:"MistyRose"}
+];
+
+var width = 960,
+    height = 500,
+    radius = Math.min(width, height) / 2;
+
+var arc = d3.svg.arc()
+    .outerRadius(radius - 10)
+    .innerRadius(0);
+
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d) { return d.graphValue; });
+
+var svg = d3.select("#forSvg").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+
+  var g = svg.selectAll(".arc")
+      .data(pie(dataset))
+      .enter().append("g");
+
+  g.append("path")
+      .attr("d", arc)
+      .style("fill", function(d) { return d.data.graphColor; })
+      // ?????????
+      .transition()
+      .duration(1000) // 1?????????????
+      .attrTween("d", function(d){
+        var interpolate = d3.interpolate(
+            { startAngle : 0, endAngle : 0 },
+            { startAngle : d.startAngle, endAngle : d.endAngle }
+        );
+        return function(t){
+            return arc(interpolate(t));
+        }
+      });
+      
+  g.append("text")
+      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+      .attr("dy", ".35em")
+      .style("text-anchor", "middle")
+      .text(function(d) { return d.data.graphLegend; });
+
+// ???????
+function saveAsImage(id, fileName) {
+  // SVG??????????
+  var svg = document.querySelector(id + " svg");
+  var svgData = new XMLSerializer().serializeToString(svg);
+
+  // SVG ? Canvas ?????????????Canvas ?????(jQuery???)
+  $("body").append("<div id='divIdToSave' style='display: none;'><canvas id='canvasIdToSave'></canvas></div>");
+
+  // Canvas????
+  var canvas = document.getElementById('canvasIdToSave');
+  
+  // canvg?SVG??Canvas???
+  canvg('canvasIdToSave', svgData);
+  
+  // Blob???????????
+  canvas.toBlob(function(blob) {
+      saveAs(blob, fileName);
+  }, "image/png");
+
+  // ???????? div / canvas ???????
+  $("#divIdToSave").remove();
+}
+</script>
+</body>
+</html>
