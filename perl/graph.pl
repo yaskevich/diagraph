@@ -40,7 +40,7 @@ app->secrets(['7b840960b54f7dd5b0c263f44ce273d36b1cd55cbf1b4375961123131f012e505
 app->defaults(gzip => 1);
 app->mode($cfg->{mode});
 # push @{app->static->paths}, '/d/viz/graph';
-push @{app->static->paths}, '../';
+push @{app->static->paths}, '../public';
 
 my $log = Mojo::Log->new(path => $cfg->{log});
 
